@@ -27,6 +27,15 @@ const hairColors = ["#1b1813", "#3a281a", "#6c4b32", "#a67653", "#c9b58f", "#2f3
 const shirtPrimaryColors = ["#3f7cc7", "#7b8f5e", "#b85b4e", "#c7a152", "#4f5a6b", "#7f6b4a"];
 const shirtSecondaryColors = ["#f3e0b6", "#2a2f3a", "#b89b6b", "#5f6f83", "#2c1c12", "#8fa6b3"];
 const pantsColors = ["#476b8a", "#365248", "#2c2f3a", "#7c5f3b", "#1f1f22", "#4a3d34"];
+const presetMessages = [
+  "Hola",
+  "Disponible",
+  "Ven a saludar",
+  "Vuelvo en un rato",
+  "Estoy ocupado, no molestar",
+  "Ya casi me voy",
+  "Estoy libre un momento",
+];
 
 const DEFAULT_SPRITE_SIZE: [number, number] = [16, 16];
 const OUTLINE_COLOR = "#0b0b0b";
@@ -225,7 +234,7 @@ export default function Home() {
   const [shirtPrimary, setShirtPrimary] = useState(shirtPrimaryColors[0]);
   const [shirtSecondary, setShirtSecondary] = useState(shirtSecondaryColors[0]);
   const [pantsColor, setPantsColor] = useState(pantsColors[0]);
-  const [message, setMessage] = useState("Nos vemos en la sala Waira.");
+  const [message, setMessage] = useState(presetMessages[0]);
 
   const [manifest, setManifest] = useState<SpriteManifest | null>(null);
   const [categories, setCategories] = useState<Record<string, SpriteCategory>>({});
@@ -450,17 +459,24 @@ export default function Home() {
             </div>
 
             <div className="message-panel">
-              <label className="pixel-label" htmlFor="mensaje">
+              <span className="pixel-label" id="mensaje-label">
                 Mensaje al hacer click
-              </label>
-              <textarea
-                id="mensaje"
-                className="pixel-textarea"
-                rows={3}
-                maxLength={140}
-                value={message}
-                onChange={(event) => setMessage(event.target.value)}
-              />
+              </span>
+              <div className="message-grid" role="group" aria-labelledby="mensaje-label">
+                {presetMessages.map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    className="message-option"
+                    data-active={option === message}
+                    aria-pressed={option === message}
+                    title={option}
+                    onClick={() => setMessage(option)}
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
               <div>
                 <span className="pixel-label">Vista previa</span>
                 <div className="pixel-bubble">{message || "..."}</div>
