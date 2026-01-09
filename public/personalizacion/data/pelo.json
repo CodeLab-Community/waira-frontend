@@ -1,0 +1,51 @@
+{
+  "category": "pelo",
+  "size": [
+    16,
+    16
+  ],
+  "sprites": [
+    {
+      "id": "Pelo2",
+      "rows": [
+        "....oooooooo....",
+        "...ohhhhhhhho...",
+        ".oohhhhhhhhhhoo.",
+        "oohhhhhhhhhhhhoo",
+        "oshhssssssssshso",
+        "ossssossssosssso",
+        ".oossossssossoo.",
+        "..ossssmmsssso..",
+        "..oooooooooooo..",
+        "................",
+        "................",
+        "................",
+        "................",
+        "................",
+        "................",
+        "................"
+      ]
+    },
+    {
+      "id": "PruebaPelo",
+      "rows": [
+        "...ooooooo......",
+        "..ohhhhhhhoooo..",
+        ".oohhhhhhhhhhoo.",
+        "oohhssssshhhhhoo",
+        "oshsssssssshhhso",
+        "ossssossssoshsso",
+        ".oossossssossoo.",
+        "..ossssmmsssso..",
+        "..oooooooooooo..",
+        "................",
+        "................",
+        "................",
+        "................",
+        "................",
+        "................",
+        "................"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "size": [
+    16,
+    16
+  ],
+  "layerOrder": [
+    "ropa",
+    "pelo",
+    "pantalon"
+  ],
+  "legend": {
+    ".": "empty",
+    "o": "outline",
+    "h": "hair",
+    "s": "skin",
+    "m": "mouth",
+    "p": "primary",
+    "q": "primaryShadow",
+    "c": "secondary",
+    "d": "secondaryShadow",
+    "t": "pants",
+    "u": "pantsShadow"
+  },
+  "palette": {
+    "outline": "0b0b0b",
+    "hair": "191015",
+    "skin": "fbc5ab",
+    "mouth": "e5b69f",
+    "primary": "303231",
+    "primaryShadow": "1d1f1e",
+    "secondary": "f4f3ee",
+    "secondaryShadow": "d3d2cd",
+    "pants": "3f3f74",
+    "pantsShadow": "29294b"
+  },
+  "categories": {
+    "pantalon": "pantalon.json",
+    "pelo": "pelo.json",
+    "ropa": "ropa.json"
+  }
+}
