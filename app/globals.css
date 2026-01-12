@@ -570,6 +570,276 @@ svg {
   color: var(--px-ink-soft);
 }
 
+.sala-room {
+  padding: clamp(12px, 2vw, 24px);
+}
+
+.sala-frame {
+  width: 100%;
+  max-width: none;
+  padding: clamp(12px, 2vw, 20px);
+}
+
+.sala-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.8fr);
+  gap: clamp(14px, 3vw, 24px);
+  align-items: start;
+}
+
+.sala-stage {
+  padding: clamp(12px, 2vw, 18px);
+}
+
+.sala-map-shell {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  min-height: clamp(240px, 55vw, 560px);
+  overflow: auto;
+}
+
+.sala-map {
+  position: relative;
+  background: #0e0c09;
+  image-rendering: pixelated;
+}
+
+.sala-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+.sala-layer.floor {
+  z-index: 1;
+}
+
+.sala-npcs {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.sala-layer.tables {
+  z-index: 3;
+}
+
+.sala-layer.pcs {
+  z-index: 4;
+}
+
+.sala-pc-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+}
+
+.sala-layer.walls {
+  z-index: 6;
+}
+
+.npc {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.npc:focus-visible {
+  outline: 2px solid var(--px-accent);
+  outline-offset: 2px;
+}
+
+.npc[data-active="true"] {
+  outline: 2px solid var(--px-warning);
+  outline-offset: 2px;
+}
+
+.npc-sprite {
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+
+.npc[data-moving="true"] .npc-sprite {
+  animation: npc-bob 480ms steps(2) infinite;
+}
+
+@keyframes npc-bob {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.sala-panel {
+  gap: 12px;
+}
+
+.sala-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.sala-status {
+  padding: 4px 6px;
+  border: 2px solid var(--px-ink);
+  background: #f1e2bb;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.65rem;
+}
+
+.sala-dialog-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.sala-dialog-button {
+  background: #f1e2bb;
+  border: 2px solid var(--px-ink);
+  padding: 6px 10px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--px-shadow);
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.sala-dialog-button:hover {
+  transform: translateY(-1px);
+}
+
+.sala-dialog-button:active {
+  transform: translateY(1px);
+  box-shadow: 1px 1px 0 var(--px-shadow);
+}
+
+.sala-dialog-button:focus-visible {
+  outline: 2px solid var(--px-accent);
+  outline-offset: 2px;
+}
+
+.sala-hint {
+  display: grid;
+  gap: 6px;
+  font-size: 0.72rem;
+  color: var(--px-ink-soft);
+}
+
+.sala-hint p {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.pc-spot {
+  position: absolute;
+  appearance: none;
+  border: 1px solid transparent;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  image-rendering: pixelated;
+}
+
+.pc-spot[data-on="true"] {
+  background: #07a3e8;
+  box-shadow: 0 0 0 1px #0b0b0b;
+}
+
+.pc-spot[data-selected="true"] {
+  border-color: var(--px-warning);
+}
+
+.pc-spot:hover {
+  border-color: var(--px-accent);
+}
+
+.pc-spot:focus-visible {
+  outline: 2px solid var(--px-accent);
+  outline-offset: 1px;
+}
+
+.pc-detail {
+  position: absolute;
+  background: #1f1b14;
+  color: #f8f1df;
+  border: 2px solid var(--px-ink);
+  padding: 10px;
+  box-shadow: 3px 3px 0 var(--px-shadow);
+  display: grid;
+  gap: 8px;
+  font-size: 0.7rem;
+  min-width: 200px;
+  max-width: 240px;
+}
+
+.pc-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.pc-detail-status {
+  padding: 2px 6px;
+  border: 1px solid #f8f1df;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.6rem;
+}
+
+.pc-detail-status[data-on="true"] {
+  background: #07a3e8;
+  color: #0f1a24;
+}
+
+.pc-detail-body {
+  display: grid;
+  gap: 6px;
+}
+
+.pc-detail-label {
+  display: block;
+  font-size: 0.55rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #d8c9a7;
+}
+
+.pc-detail-value,
+.pc-detail-message {
+  display: block;
+  line-height: 1.4;
+}
+
+.pc-detail-message {
+  font-style: italic;
+}
+
 .legend-item {
   display: flex;
   align-items: center;
@@ -608,6 +878,10 @@ svg {
 
   .room-grid {
     min-width: 540px;
+  }
+
+  .sala-body {
+    grid-template-columns: 1fr;
   }
 }
 
