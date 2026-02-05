@@ -572,12 +572,16 @@ svg {
 
 .sala-room {
   padding: clamp(12px, 2vw, 24px);
+  height: 100vh;
+  overflow: hidden;
 }
 
 .sala-frame {
   width: 100%;
   max-width: none;
   padding: clamp(12px, 2vw, 20px);
+  height: 100%;
+  overflow: hidden;
 }
 
 .sala-body {
@@ -593,14 +597,14 @@ svg {
 
 .sala-map-shell {
   width: 100%;
+  height: 100%;
   display: grid;
   place-items: center;
   padding: 0;
   background: transparent;
   border: 0;
   box-shadow: none;
-  min-height: clamp(240px, 55vw, 560px);
-  overflow: auto;
+  overflow: hidden;
 }
 
 .sala-map {
@@ -898,4 +902,182 @@ svg {
   .pc-tile {
     transition: none;
   }
+}
+
+/* Corner pixel-art button */
+.corner-button {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 64px;
+  height: 64px;
+  border: 4px solid var(--px-ink);
+  /* remove blocky pixel bar; keep no heavy offset */
+  box-shadow: none;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  image-rendering: pixelated;
+  padding: 4px;
+  z-index: 60;
+}
+
+.corner-button:hover { transform: translateY(-2px); }
+
+/* Top-right pixel-art button (uses ButtonIcon.png) */
+.top-right-button {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  width: 64px;
+  height: 64px;
+  border: 4px solid var(--px-ink);
+  box-shadow: none;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  image-rendering: pixelated;
+  padding: 4px;
+  z-index: 60;
+}
+
+.top-right-button:hover { transform: translateY(-2px); }
+
+/* Modal overlay and content */
+.info-modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 100;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+.info-modal {
+  position: relative;
+  box-sizing: border-box;
+  width: min(900px, 95vw);
+  max-width: 95vw;
+  max-height: 90vh;
+  background: var(--px-paper);
+  border: 4px solid var(--px-ink);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
+  padding: 18px;
+  display: block;
+  gap: 12px;
+  overflow: hidden; /* ensure only content scrolls */
+}
+
+.info-modal-close {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  background: transparent;
+  border: 2px solid var(--px-ink);
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.info-modal .pixel-button svg {
+  image-rendering: pixelated;
+}
+
+.info-modal-subtitle {
+  margin-top: -2px;
+  margin-bottom: 0;
+  font-size: 1.3rem;
+  color: var(--px-ink);
+  text-transform: none;
+}
+
+/* Editor modal grid */
+.editor-modal-grid {
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  height: 100%;
+}
+
+.editor-modal-nav {
+  display: grid;
+  gap: 8px;
+}
+
+.editor-modal-nav .pixel-button.active {
+  border-color: var(--px-accent-strong);
+  box-shadow: 0 0 0 2px var(--px-accent), 2px 2px 0 var(--px-shadow);
+}
+
+/* Neutralize nested pixel panels inside the modal so we don't get "boxes within boxes" */
+.info-modal .pixel-panel .pixel-panel,
+.info-modal .pixel-panel .pixel-panel * {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* Unified container that provides a single panel look inside the modal */
+.editor-unified {
+  background: var(--px-paper);
+  border: 3px solid var(--px-ink);
+  box-shadow: 0 10px 0 var(--px-shadow);
+  padding: 18px;
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 20px;
+  align-items: start;
+}
+
+/* Make avatar area centered and prominent */
+.editor-unified .avatar-frame {
+  background: transparent;
+  border: 3px solid var(--px-ink);
+  box-shadow: inset 0 0 0 3px rgba(0,0,0,0.03);
+  padding: 16px;
+  display: grid;
+  place-items: center;
+}
+
+/* Controls column styling */
+.editor-unified .editor-panel {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+/* Keep footers aligned and remove double borders */
+.editor-unified .pixel-actions {
+  box-shadow: none;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  padding-top: 12px;
+  margin-top: 8px;
+}
+
+.editor-modal-content {
+  max-height: calc(90vh - 40px); /* account for modal padding */
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 8px; /* room for scrollbar */
+  box-sizing: border-box;
+}
+
+.editor-modal-nav .pixel-button {
+  width: 100%;
+  text-align: center;
+}
+
+/* Ensure modal close button stays inside and doesn't cause overflow */
+.info-modal-close {
+  z-index: 10;
 }

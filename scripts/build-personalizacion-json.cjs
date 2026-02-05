@@ -100,48 +100,126 @@ async function buildCategory(category) {
     const filePath = path.join(categoryPath, fileName);
     const png = await readPng(filePath);
 
-    if (png.width !== SIZE || png.height !== SIZE) {
-      throw new Error(
-        `Invalid size for ${path.relative(
-          ROOT,
-          filePath
-        )}: expected ${SIZE}x${SIZE}, got ${png.width}x${png.height}`
-      );
-    }
+    // Verificar tamaño esperado según la categoría
+    if (category === "pantalon") {
+      if ((png.width === 30 && png.height === 3) || (png.width === SIZE && png.height === SIZE)) {
+        if (png.width === 30 && png.height === 3) {
+          // Dividir la imagen en 3 frames de 10x3 y guardarlos en un solo sprite
+          const frameWidth = 10;
+          const frameHeight = 3;
+          const frames = [];
+          const allUnknownColors = new Set();
 
-    const rows = [];
-    const unknownColors = new Set();
+          for (let frameIdx = 0; frameIdx < 3; frameIdx++) {
+            const rows = [];
 
-    for (let y = 0; y < png.height; y += 1) {
-      let row = "";
-      for (let x = 0; x < png.width; x += 1) {
-        const idx = (png.width * y + x) * 4;
-        const r = png.data[idx];
-        const g = png.data[idx + 1];
-        const b = png.data[idx + 2];
-        const a = png.data[idx + 3];
-        row += rgbaToToken(r, g, b, a, unknownColors);
+            for (let y = 0; y < frameHeight; y += 1) {
+              let row = "";
+              for (let x = 0; x < frameWidth; x += 1) {
+                const idx = (png.width * (y) + (frameIdx * frameWidth + x)) * 4;
+                const r = png.data[idx];
+                const g = png.data[idx + 1];
+                const b = png.data[idx + 2];
+                const a = png.data[idx + 3];
+                row += rgbaToToken(r, g, b, a, allUnknownColors);
+              }
+              rows.push(row);
+            }
+            frames.push(rows);
+          }
+
+          if (allUnknownColors.size > 0) {
+            throw new Error(
+              `Unknown colors in ${path.relative(ROOT, filePath)}: ${[...allUnknownColors].join(", ")}`
+            );
+          }
+
+          sprites.push({
+            id: path.basename(fileName, path.extname(fileName)),
+            type: "animated",
+            frameSize: [frameWidth, frameHeight],
+            frames,
+          });
+        } else {
+          // Procesar pantalones de 16x16 como un solo sprite estático
+          const rows = [];
+          const unknownColors = new Set();
+
+          for (let y = 0; y < png.height; y += 1) {
+            let row = "";
+            for (let x = 0; x < png.width; x += 1) {
+              const idx = (png.width * y + x) * 4;
+              const r = png.data[idx];
+              const g = png.data[idx + 1];
+              const b = png.data[idx + 2];
+              const a = png.data[idx + 3];
+              row += rgbaToToken(r, g, b, a, unknownColors);
+            }
+            rows.push(row);
+          }
+
+          if (unknownColors.size > 0) {
+            throw new Error(
+              `Unknown colors in ${path.relative(ROOT, filePath)}: ${[...unknownColors].join(", ")}`
+            );
+          }
+
+          sprites.push({
+            id: path.basename(fileName, path.extname(fileName)),
+            type: "static",
+            rows,
+          });
+        }
+      } else {
+        throw new Error(
+          `Invalid size for ${path.relative(
+            ROOT,
+            filePath
+          )}: expected 30x3 or ${SIZE}x${SIZE}, got ${png.width}x${png.height}`
+        );
       }
-      rows.push(row);
-    }
+    } else {
+      if (png.width !== SIZE || png.height !== SIZE) {
+        throw new Error(
+          `Invalid size for ${path.relative(
+            ROOT,
+            filePath
+          )}: expected ${SIZE}x${SIZE}, got ${png.width}x${png.height}`
+        );
+      }
 
-    if (unknownColors.size > 0) {
-      throw new Error(
-        `Unknown colors in ${path.relative(ROOT, filePath)}: ${[
-          ...unknownColors,
-        ].join(", ")}`
-      );
-    }
+      const rows = [];
+      const unknownColors = new Set();
 
-    sprites.push({
-      id: path.basename(fileName, path.extname(fileName)),
-      rows,
-    });
+      for (let y = 0; y < png.height; y += 1) {
+        let row = "";
+        for (let x = 0; x < png.width; x += 1) {
+          const idx = (png.width * y + x) * 4;
+          const r = png.data[idx];
+          const g = png.data[idx + 1];
+          const b = png.data[idx + 2];
+          const a = png.data[idx + 3];
+          row += rgbaToToken(r, g, b, a, unknownColors);
+        }
+        rows.push(row);
+      }
+
+      if (unknownColors.size > 0) {
+        throw new Error(
+          `Unknown colors in ${path.relative(ROOT, filePath)}: ${[...unknownColors].join(", ")}`
+        );
+      }
+
+      sprites.push({
+        id: path.basename(fileName, path.extname(fileName)),
+        rows,
+      });
+    }
   }
 
   return {
     category,
-    size: [SIZE, SIZE],
+    size: category === "pantalon" ? [30, 3] : [SIZE, SIZE],
     sprites,
   };
 }
