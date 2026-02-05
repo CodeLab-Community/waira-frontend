@@ -622,24 +622,12 @@ svg {
   z-index: 1;
 }
 
-.sala-npcs {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-}
-
 .sala-layer.tables {
   z-index: 3;
 }
 
 .sala-layer.pcs {
   z-index: 4;
-}
-
-.sala-pc-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 7;
 }
 
 .sala-layer.walls {
@@ -757,6 +745,7 @@ svg {
 
 .pc-spot {
   position: absolute;
+  z-index: 7;
   appearance: none;
   border: 1px solid transparent;
   background: transparent;
@@ -785,6 +774,7 @@ svg {
 
 .pc-detail {
   position: absolute;
+  z-index: 8;
   background: #1f1b14;
   color: #f8f1df;
   border: 2px solid var(--px-ink);
@@ -804,6 +794,12 @@ svg {
   gap: 8px;
 }
 
+.pc-detail-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .pc-detail-status {
   padding: 2px 6px;
   border: 1px solid #f8f1df;
@@ -815,6 +811,22 @@ svg {
 .pc-detail-status[data-on="true"] {
   background: #07a3e8;
   color: #0f1a24;
+}
+
+.pc-detail-close {
+  border: 1px solid #f8f1df;
+  background: transparent;
+  color: inherit;
+  width: 22px;
+  height: 22px;
+  line-height: 1;
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+
+.pc-detail-close:focus-visible {
+  outline: 2px solid var(--px-accent);
+  outline-offset: 2px;
 }
 
 .pc-detail-body {
@@ -838,6 +850,96 @@ svg {
 
 .pc-detail-message {
   font-style: italic;
+}
+
+.walker {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  place-items: center;
+  width: var(--sprite-size);
+  height: var(--sprite-size);
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.walker:focus-visible {
+  outline: 2px solid var(--px-accent);
+  outline-offset: 2px;
+}
+
+.walker-sprite {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: calc(var(--sprite-size) * 4) var(--sprite-size);
+  image-rendering: pixelated;
+  animation: walker-cycle 0.6s steps(4) infinite;
+}
+
+.walker[data-moving="false"] .walker-sprite {
+  animation-play-state: paused;
+}
+
+.walker[data-facing="left"] .walker-sprite {
+  transform: scaleX(-1);
+}
+
+.walker-panel {
+  border: 2px solid var(--px-ink);
+  background: var(--px-paper);
+  box-shadow: 2px 2px 0 var(--px-shadow);
+  padding: 10px 12px;
+  display: grid;
+  gap: 8px;
+  font-size: 0.75rem;
+}
+
+.walker-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.walker-panel-close {
+  border: 1px solid var(--px-ink);
+  background: transparent;
+  color: inherit;
+  width: 22px;
+  height: 22px;
+  line-height: 1;
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+
+.walker-panel-close:focus-visible {
+  outline: 2px solid var(--px-accent);
+  outline-offset: 2px;
+}
+
+.walker-panel-body {
+  border: 2px solid var(--px-ink);
+  background: #1f1b14;
+  color: #f8f1df;
+  padding: 8px 10px;
+  min-height: 48px;
+  line-height: 1.4;
+}
+
+@keyframes walker-cycle {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: calc(var(--sprite-size) * -4) 0;
+  }
 }
 
 .legend-item {
